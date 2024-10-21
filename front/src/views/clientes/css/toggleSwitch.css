@@ -1,0 +1,69 @@
+.toggle-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.switch {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.switch.active {
+  background-color: #4caf50; /* Color cuando está activo */
+}
+
+.switch:before {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 50%;
+  left: 1px;
+  transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch.active:before {
+  transform: translateX(30px); /* Mueve el círculo a la derecha cuando está activo */
+}
+
+.switch-icon {
+  font-size: 16px;
+  color: white;
+}
+
+.switch-text {
+  position: absolute;
+  font-size: 12px;
+  line-height: 30px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.switch.active .switch-text:first-child {
+  opacity: 0;
+}
+
+.switch.active .switch-text:last-child {
+  opacity: 1;
+}
