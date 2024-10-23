@@ -115,7 +115,7 @@ const ConfiguracionesTable = () => {
                 <CTableDataCell className="text-center">
                   <CButton color="primary" onClick={() => handleEditClick(precio)}>
                     <CIcon icon={cilPencil} className="me-2" />
-                    Editar
+                    <span className="d-none d-sm-inline">Editar</span>
                   </CButton>
                 </CTableDataCell>
               </CTableRow>

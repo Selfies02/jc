@@ -386,7 +386,7 @@ const BillingDetailsModal = ({
         </CCard>
 
         <CRow className="mb-3">
-          <CCol md="6">
+          <CCol md="6" className="mb-3 mb-md-0">
             <CCard>
               <CCardHeader>Opciones de entrega</CCardHeader>
               <CCardBody>

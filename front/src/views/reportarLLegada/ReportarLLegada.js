@@ -128,6 +128,7 @@ const ReportarLlegada = () => {
               color="success"
               onClick={() => showConfirm(2, 'envío normal')}
               disabled={isReporting || !hasNormalPackages}
+              className="me-3"
             >
               {isReporting ? 'Reportando...' : 'Reportar llegada normal'}
             </CButton>
@@ -135,6 +136,7 @@ const ReportarLlegada = () => {
               color="warning"
               onClick={() => showConfirm(1, 'envío express')}
               disabled={isReporting || !hasExpressPackages}
+              className="me-3"
             >
               {isReporting ? 'Reportando...' : 'Reportar llegada express'}
             </CButton>

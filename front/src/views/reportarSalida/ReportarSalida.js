@@ -122,11 +122,12 @@ const ReportarSalida = () => {
           <h3 className="text-center mb-0">Estado de los paquetes</h3>
         </CCardHeader>
         <CCardBody>
-          <div className="d-flex justify-content-between mb-4">
+        <div className="d-flex justify-content-between mb-4">
             <CButton
               color="success"
               onClick={() => showConfirm(2, 'envío normal')}
               disabled={isReporting || normalPackagesCount === 0}
+              className="me-2"
             >
               {isReporting ? 'Reportando...' : 'Reportar salida normal'}
             </CButton>
@@ -134,6 +135,7 @@ const ReportarSalida = () => {
               color="warning"
               onClick={() => showConfirm(1, 'envío express')}
               disabled={isReporting || expressPackagesCount === 0}
+              className="ms-2"
             >
               {isReporting ? 'Reportando...' : 'Reportar salida express'}
             </CButton>

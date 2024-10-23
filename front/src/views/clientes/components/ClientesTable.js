@@ -147,7 +147,7 @@ const ClientesTable = () => {
                   <CTableDataCell className="text-center">
                     <CButton color="primary" onClick={() => handleEditClick(customer)}>
                       <CIcon icon={cilPencil} className="me-2" />
-                      Editar
+                      <span className="d-none d-sm-inline">Editar</span>
                     </CButton>
                   </CTableDataCell>
                 </CTableRow>

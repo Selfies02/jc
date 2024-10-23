@@ -139,7 +139,7 @@ const AddPackageModal = ({
             <img
               src={previewImage}
               alt="Vista previa"
-              style={{ width: '400px', height: '200px', objectFit: 'contain' }}
+              style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain' }}
             />
           </div>
         )}

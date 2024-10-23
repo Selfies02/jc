@@ -138,19 +138,21 @@ const FacturasView = ({ codCustomer, onClose }) => {
               {totalPages > 0 && (
                 <CPagination className="mt-3">
                   <CPaginationItem
+                    aria-label="Previous"
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((prev) => prev - 1)}
                   >
-                    Anterior
+                    <span aria-hidden="true">&laquo;</span>
                   </CPaginationItem>
                   <CPaginationItem disabled>
                     {currentPage} de {totalPages}
                   </CPaginationItem>
                   <CPaginationItem
+                    aria-label="Next"
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage((prev) => prev + 1)}
                   >
-                    Siguiente
+                    <span aria-hidden="true">&raquo;</span>
                   </CPaginationItem>
                 </CPagination>
               )}

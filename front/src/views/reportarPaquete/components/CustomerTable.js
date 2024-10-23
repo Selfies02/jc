@@ -119,7 +119,7 @@ const CustomerTable = ({
                   <CTableDataCell>
                     <CButton color="primary" onClick={() => openModal(customer)}>
                       <CIcon icon={cilPlus} className="me-2" />
-                      Agregar paquete
+                      <span className="d-none d-sm-inline">Agregar paquete</span>
                     </CButton>
                   </CTableDataCell>
                 </CTableRow>

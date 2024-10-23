@@ -12,6 +12,8 @@ import {
   CInputGroupText,
   CInputGroup,
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilArrowLeft } from '@coreui/icons'
 import { Toaster, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { sendResetEmail } from '../../services/passResetService.js'
@@ -81,13 +83,15 @@ const ForgotPassword = () => {
                           />
                         </CInputGroup>
                         <div className="invalid-feedback">Por favor, ingrese un correo válido.</div>
-                        <CButton color="primary" type="submit" className="w-100 mt-3">
-                          Recuperar contraseña
-                        </CButton>
+                        <div className="d-flex justify-content-between mt-3">
+                          <CButton color="secondary" onClick={handleLogin} className="me-2 w-25">
+                            <CIcon icon={cilArrowLeft} className="me-2" />
+                          </CButton>
+                          <CButton color="primary" type="submit" className="w-75">
+                            Recuperar contraseña
+                          </CButton>
+                        </div>
                       </CForm>
-                      <CButton color="primary" onClick={handleLogin} className="w-100 mt-3">
-                        Iniciar sesión
-                      </CButton>
                     </CCol>
                   </CRow>
                 </CCardBody>

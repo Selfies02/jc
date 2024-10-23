@@ -303,7 +303,7 @@ const Register = () => {
                       color="secondary"
                       onClick={step === 1 ? () => navigate('/login') : handlePreviousStep}
                     >
-                      {step === 1 ? 'Iniciar Sesión' : 'Atrás'}
+                      {step === 1 ? 'Atrás' : 'Atrás'}
                     </CButton>
                     <CButton color="primary" onClick={handleNextStep}>
                       {step === 1 ? 'Crear cuenta' : step === 2 ? 'Siguiente' : 'Registrar'}

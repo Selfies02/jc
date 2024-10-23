@@ -143,7 +143,8 @@ const PackageTable = ({
               <CTableDataCell className="text-center">{pkg.expressPackages.length}</CTableDataCell>
               <CTableDataCell>
                 <CButton color="primary" onClick={() => handleFacturarClick(pkg)}>
-                  <CIcon icon={cilDollar} /> Facturar
+                  <CIcon icon={cilDollar} />
+                  <span className="d-none d-sm-inline">Facturar</span>
                 </CButton>
               </CTableDataCell>
             </CTableRow>

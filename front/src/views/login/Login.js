@@ -121,9 +121,11 @@ const Login = () => {
                         </CCol>
                       )}
                       <CCol xs={12}>
-                        <CButton href="/forgotPassword" color="link" className="px-0">
-                          ¿Has olvidado tu contraseña?
-                        </CButton>
+                        <div className="d-flex justify-content-end">
+                          <CButton href="/forgotPassword" color="link" className="px-0 text-end">
+                            ¿Has olvidado tu contraseña?
+                          </CButton>
+                        </div>
                       </CCol>
                     </CRow>
                   </CForm>
@@ -141,7 +143,7 @@ const Login = () => {
                         a nosotros y descubre lo fácil que es recibir paquetes con nosotros.
                       </p>
                       <Link to="/register">
-                        <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                        <CButton color="light" className="mt-3" active tabIndex={-1}>
                           Registrarse
                         </CButton>
                       </Link>
