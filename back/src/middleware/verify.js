@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 // Clave secreta del JWT
 const JWTSECRET = process.env.JWTSECRET || 'your_jwt_secret_key';
-const FRONT_URL = `${process.env.API_FRONT}:${process.env.PORT_FRONT}`;
+const FRONT_URL = `${process.env.API_FRONT}`;
 
 export const verifyEmail = async (req, res) => {
     const { token } = req.query;

@@ -95,11 +95,11 @@ export const configTransportVery = (nombre, apellido, email, token, id) => {
             <h1>Hola, ${nombre} ${apellido}</h1>
             <p>Gracias por registrarte en JetCargo. Para completar tu registro y acceder a tu cuenta, por favor haz clic en el botón de abajo para confirmar tu correo electrónico.</p>
             <!-- Estilo aplicado directamente al botón para asegurarnos de que el texto sea blanco -->
-            <a href="${process.env.API_BACK}:${process.env.PORT_BACK}/api/verify/email?token=${token}" style="display: inline-block; padding: 14px 28px; margin-top: 20px; background-color: #808080; color: #ffffff; text-decoration: none; font-size: 16px; border-radius: 50px; transition: background-color 0.3s ease;">
+            <a href="${process.env.API_BACK}/api/verify/email?token=${token}" style="display: inline-block; padding: 14px 28px; margin-top: 20px; background-color: #808080; color: #ffffff; text-decoration: none; font-size: 16px; border-radius: 50px; transition: background-color 0.3s ease;">
               Confirmar mi cuenta
             </a>
             <p>Si no puedes hacer clic en el enlace, copia y pega esta URL en tu navegador:</p>
-            <p style="color: #95a5a6;">${process.env.API_BACK}:${process.env.PORT_BACK}/api/verify/email?token=${token}</p>
+            <p style="color: #95a5a6;">${process.env.API_BACK}/api/verify/email?token=${token}</p>
             <p>Este enlace expira en 7 días.</p>
           </div>
           <div class="footer">
