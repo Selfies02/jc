@@ -31,12 +31,14 @@ const CustomerTable = ({
   const [selectedLocker, setSelectedLocker] = useState('')
   const [codCustomer, setCodCustomer] = useState(null)
 
+  const activeCustomers = filteredCustomers.filter((customer) => customer.IND_USR === 1)
+
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage)
+  const totalPages = Math.ceil(activeCustomers.length / itemsPerPage)
 
   const groupedCustomers = useMemo(() => {
-    const grouped = filteredCustomers.reduce((acc, customer) => {
+    const grouped = activeCustomers.reduce((acc, customer) => {
       const { COD_CUSTOMER, COD_VIRTUAL_LOCKER_CODE, COD_LOCKER } = customer
       if (!acc[COD_CUSTOMER]) {
         acc[COD_CUSTOMER] = {
@@ -55,7 +57,7 @@ const CustomerTable = ({
       return acc
     }, {})
     return Object.values(grouped)
-  }, [filteredCustomers])
+  }, [activeCustomers])
 
   const openModal = (customer) => {
     if (!customer.COD_CUSTOMER) {
@@ -196,6 +198,7 @@ CustomerTable.propTypes = {
       COD_CUSTOMER: PropTypes.number.isRequired,
       COD_VIRTUAL_LOCKER_CODE: PropTypes.string,
       COD_LOCKER: PropTypes.number,
+      IND_USR: PropTypes.number.isRequired,
     }),
   ).isRequired,
   currentPage: PropTypes.number.isRequired,

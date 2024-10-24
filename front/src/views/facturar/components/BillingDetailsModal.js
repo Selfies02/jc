@@ -46,6 +46,7 @@ const BillingDetailsModal = ({
   const [jetCargoData, setJetCargoData] = useState(null)
   const [customerPhone, setCustomerPhone] = useState('')
   const [customerAddress, setCustomerAddress] = useState('')
+  const [customerLocker, setCustomerLocker] = useState('')
   const [isInvoicing, setIsInvoicing] = useState(false)
 
   const ISV_RATE = 0.15
@@ -62,9 +63,19 @@ const BillingDetailsModal = ({
 
     const fetchCustomerData = async () => {
       try {
-        const { phone, address } = await getCustomerAddressAndPhone(cod_customer)
+        const { phone, address, locker } = await getCustomerAddressAndPhone(cod_customer)
         setCustomerPhone(phone)
         setCustomerAddress(address)
+        if (locker) {
+          const lockers = locker.split(',')
+          const filteredLocker =
+            packageType === 'express'
+              ? lockers.find((l) => l.startsWith('JTXC'))
+              : lockers.find((l) => l.startsWith('JTC'))
+          setCustomerLocker(filteredLocker || '')
+        } else {
+          setCustomerLocker('')
+        }
       } catch (error) {
         toast.error(error.message || 'Error al obtener datos del cliente')
       }
@@ -245,6 +256,7 @@ const BillingDetailsModal = ({
         jetCargoData,
         customerPhone,
         customerAddress,
+        customerLocker,
       )
 
       const response = await insertInvoiceAndCharges({ usr_add, charges }, pdfBlob)

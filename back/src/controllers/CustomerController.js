@@ -66,7 +66,8 @@ export const getCustomerAddressAndPhone = async (req, res) => {
 
         return res.status(200).json({
             phone: result[0].NUM_PHONE,
-            address: result[0].DES_ADDRESS
+            address: result[0].DES_ADDRESS,
+            locker: result[0].VIRTUAL_LOCKER_CODES
         });
 
     } catch (error) {

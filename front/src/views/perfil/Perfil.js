@@ -231,12 +231,21 @@ const Perfil = () => {
 
       const response = await updateUserDetails(updatedDetails)
 
-      toast.success(response.message)
-      setIsEditing(false)
+      localStorage.setItem('updateMessage', response.message)
+
+      window.location.reload()
     } catch (error) {
       toast.error('Error al actualizar los detalles del usuario')
     }
   }
+
+  useEffect(() => {
+    const savedMessage = localStorage.getItem('updateMessage')
+    if (savedMessage) {
+      toast.success(savedMessage)
+      localStorage.removeItem('updateMessage')
+    }
+  }, [])
 
   const handleCancelClick = () => {
     setUserDetails(originalUserDetails)

@@ -16,6 +16,7 @@ const PDFGenerator = async (
   jetCargoData,
   customerPhone,
   customerAddress,
+  customerLocker,
 ) => {
   try {
     const { LAST_NUMBER } = await getInvoiceNumber()
@@ -139,7 +140,7 @@ const PDFGenerator = async (
         doc.text(`Dirección: ${jetCargoData.DIRECCION}`, 70, 44)
 
         doc.setFontSize(12)
-        doc.text('Factura', 175, 20, { align: 'center' })
+        doc.text('Pre-Factura', 175, 20, { align: 'center' })
         doc.setFontSize(9)
         doc.text(`Número: ${LAST_NUMBER + 1}`, 160, 26)
         doc.text(`Fecha: ${formatDate(new Date())}`, 160, 32)
@@ -158,6 +159,13 @@ const PDFGenerator = async (
         doc.text(`Teléfono: ${customerPhone}`, 120, 70)
         doc.text(`Dirección: ${customerAddress}`, 120, 76)
 
+        doc.setLineWidth(0.5)
+        doc.line(10, 90, 200, 90)
+        doc.setFont('bold')
+        doc.setFontSize(12)
+        doc.text('DETALLES DE PRE-FACTURA', 14, 95)
+        doc.line(10, 98, 200, 98)
+
         autoTable(doc, {
           head: [['Cant.', 'Tracking', 'Peso', 'Precio', 'Total']],
           body: charges.map((charge, index) => {
@@ -173,7 +181,7 @@ const PDFGenerator = async (
               `L${charge.SUBTOTAL}`,
             ]
           }),
-          startY: 90,
+          startY: 100,
           headStyles: {
             0: { halign: 'left' },
             1: { halign: 'left' },
@@ -197,6 +205,15 @@ const PDFGenerator = async (
 
         let finalY = doc.lastAutoTable.finalY + 10
 
+        doc.setFontSize(8)
+        const grandTotalInWords = numberToWords(
+          parseFloat(grandTotal.replace('L', '').replace(',', '')),
+        )
+        doc.line(10, finalY + 8, 200, finalY + 8)
+        doc.text(`Valor en letras: ${grandTotalInWords.toUpperCase()}`, 10, finalY + 12)
+        doc.line(10, finalY + 14, 200, finalY + 14)
+
+        doc.setFontSize(10)
         doc.text(`Subtotal:`, rightMargin - textWidth - offset, finalY, { align: 'right' })
         doc.text(`${subtotal}`, rightMargin, finalY, { align: 'right' })
 
@@ -206,10 +223,43 @@ const PDFGenerator = async (
         doc.text(`Total:`, rightMargin - textWidth - offset, finalY + 12, { align: 'right' })
         doc.text(`${grandTotal}`, rightMargin, finalY + 12, { align: 'right' })
 
-        const grandTotalInWords = numberToWords(
-          parseFloat(grandTotal.replace('L', '').replace(',', '')),
+        doc.setFont('bold')
+        doc.setFontSize(12)
+        doc.text('ESTE DOCUMENTO NO ES UNA FACTURA', 10, finalY + 20)
+
+        // Add the new notes section
+        doc.setFontSize(9)
+        doc.text('Notas:', 10, finalY + 30)
+        doc.text('PAQUETES DISPONIBLES EN JET CARGO', 10, finalY + 35)
+        doc.text('HORARIO DE ATENCIÓN', 10, finalY + 40)
+        doc.text('LUNES A VIERNES DE 8:30 AM A 5:00 PM', 10, finalY + 45)
+        doc.text('SABADO 8:30 A 12:00 PM', 10, finalY + 50)
+        doc.text('PUEDE LLAMARNOS O ESCRIBIRNOS VÍA WHATSAPP', 10, finalY + 55)
+        doc.text('AL NÚMERO DE CELULAR (+504) 9846-3738', 10, finalY + 60)
+
+        doc.setFontSize(8)
+        doc.text(
+          'Por favor, revisar los paquetes en nuestra oficina.',
+          rightMargin - 37.5,
+          finalY + 50,
+          {
+            align: 'center',
+          },
         )
-        doc.text(`Valor en letras: ${grandTotalInWords}`, 10, finalY + 30)
+        doc.text(
+          'He leido y revisado de acuerdo a lo antes descrito, sin reclamos.',
+          rightMargin - 37.5,
+          finalY + 55,
+          {
+            align: 'center',
+          },
+        )
+
+        doc.setLineWidth(0.5)
+        const signatureLineX = rightMargin - 75
+        doc.line(signatureLineX, finalY + 40, rightMargin, finalY + 40)
+        doc.setFontSize(10)
+        doc.text(`${customerLocker}`, rightMargin - 37.5, finalY + 45, { align: 'center' })
 
         const pageCount = doc.internal.getNumberOfPages()
         for (let i = 1; i <= pageCount; i++) {

@@ -83,6 +83,12 @@ const FacturasView = ({ codCustomer, onClose }) => {
     }
   }
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+    setSelectedPdf(null)
+    setSelectedInvoiceIndex(null)
+  }
+
   if (loading) {
     return <CSpinner color="primary" />
   }
@@ -140,7 +146,7 @@ const FacturasView = ({ codCustomer, onClose }) => {
                   <CPaginationItem
                     aria-label="Previous"
                     disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((prev) => prev - 1)}
+                    onClick={() => handlePageChange(currentPage - 1)}
                   >
                     <span aria-hidden="true">&laquo;</span>
                   </CPaginationItem>
@@ -150,7 +156,7 @@ const FacturasView = ({ codCustomer, onClose }) => {
                   <CPaginationItem
                     aria-label="Next"
                     disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                    onClick={() => handlePageChange(currentPage + 1)}
                   >
                     <span aria-hidden="true">&raquo;</span>
                   </CPaginationItem>

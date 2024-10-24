@@ -150,7 +150,7 @@ const FacturasTable = ({ onCustomerSelect, onCloseFacturas }) => {
                   <CTableDataCell>{customer.EMAIL || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
                     <CButton color="primary" size="sm" onClick={() => handleViewFacturas(customer)}>
-                      Ver facturas
+                      Ver pre-facturas
                     </CButton>
                   </CTableDataCell>
                 </CTableRow>

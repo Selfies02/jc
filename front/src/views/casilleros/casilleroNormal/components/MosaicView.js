@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   CCard,
@@ -19,6 +19,8 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
   const indexOfLastPackage = currentPage * itemsPerPage
   const indexOfFirstPackage = indexOfLastPackage - itemsPerPage
   const fullBackendUrl = config.getFullBackendUrl()
+
+  const [placeholderImages, setPlaceholderImages] = useState({})
 
   const sortedPackages = [...packages].sort((a, b) => {
     const statusOrder = {
@@ -44,6 +46,22 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
 
   const pageNumbers = [...Array(endPage - startPage + 1)].map((_, i) => startPage + i)
 
+  const handleImageError = (e, tracking) => {
+    e.target.src = 'https://placehold.co/600x400/?text=Sin+imagen'
+    e.target.style.display = 'block'
+    e.target.style.objectFit = 'cover'
+    setPlaceholderImages((prev) => ({
+      ...prev,
+      [tracking]: true,
+    }))
+  }
+
+  const handleImageClick = (tracking, imagePath) => {
+    if (!placeholderImages[tracking]) {
+      onImageClick(imagePath)
+    }
+  }
+
   return (
     <>
       {currentPackages.length > 0 ? (
@@ -68,12 +86,15 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
                     <CCardImage
                       src={`${fullBackendUrl}/${pkg.IMAGEN}`}
                       alt="Package"
-                      onClick={() => onImageClick(`${fullBackendUrl}/${pkg.IMAGEN}`)}
+                      onError={(e) => handleImageError(e, pkg.TRACKING)}
+                      onClick={() =>
+                        handleImageClick(pkg.TRACKING, `${fullBackendUrl}/${pkg.IMAGEN}`)
+                      }
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'contain',
-                        cursor: 'pointer',
+                        cursor: placeholderImages[pkg.TRACKING] ? 'default' : 'pointer',
                       }}
                     />
                   </div>
@@ -91,6 +112,7 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
               aria-label="Previous"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              style={{ cursor: 'pointer' }}
             >
               <span aria-hidden="true">&laquo;</span>
             </CPaginationItem>
@@ -99,6 +121,7 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
                 key={number}
                 active={currentPage === number}
                 onClick={() => setCurrentPage(number)}
+                style={{ cursor: 'pointer' }}
               >
                 {number}
               </CPaginationItem>
@@ -107,6 +130,7 @@ const MosaicView = ({ packages, currentPage, setCurrentPage, onImageClick }) => 
               aria-label="Next"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              style={{ cursor: 'pointer' }}
             >
               <span aria-hidden="true">&raquo;</span>
             </CPaginationItem>

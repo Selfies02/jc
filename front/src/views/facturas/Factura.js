@@ -25,7 +25,7 @@ const Facturas = () => {
       <CCard className="shadow-lg">
         <CCardHeader className="bg-primary text-white">
           <h3 className="text-center mb-0">
-            {currentCustomerName ? `Facturas de ${currentCustomerName}` : 'Facturas'}
+            {currentCustomerName ? `Pre-facturas de ${currentCustomerName}` : 'Pre-facturas'}
           </h3>
         </CCardHeader>
         <CCardBody>

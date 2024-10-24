@@ -22,8 +22,8 @@ const ListView = ({ packages, currentPage, setCurrentPage, onImageClick }) => {
   const indexOfLastPackage = currentPage * itemsPerPage
   const indexOfFirstPackage = indexOfLastPackage - itemsPerPage
   const fullBackendUrl = config.getFullBackendUrl()
+  const placeholderUrl = 'https://placehold.co/600x400/png?text=Sin+imagen'
 
-  // Sorting packages by status
   const sortedPackages = [...packages].sort((a, b) => {
     const statusOrder = {
       'EN BODEGA': 1,
@@ -48,6 +48,35 @@ const ListView = ({ packages, currentPage, setCurrentPage, onImageClick }) => {
 
   const pageNumbers = [...Array(endPage - startPage + 1)].map((_, i) => startPage + i)
 
+  const renderImageOrPlaceholder = (pkg) => {
+    let imageUrl = pkg.IMAGEN ? `${fullBackendUrl}/${pkg.IMAGEN}` : placeholderUrl
+    let [currentSrc, setCurrentSrc] = React.useState(imageUrl)
+    const isPlaceholder = currentSrc === placeholderUrl
+
+    return (
+      <img
+        src={imageUrl}
+        alt="Imagen del paquete"
+        onError={(e) => {
+          setCurrentSrc(placeholderUrl)
+          e.target.src = placeholderUrl
+        }}
+        style={{
+          cursor: isPlaceholder ? 'default' : 'pointer',
+          maxWidth: '50px',
+          maxHeight: '50px',
+          width: 'auto',
+          height: 'auto',
+        }}
+        onClick={() => {
+          if (!isPlaceholder) {
+            onImageClick(imageUrl)
+          }
+        }}
+      />
+    )
+  }
+
   return (
     <div style={{ marginBottom: '40px' }}>
       {currentPackages.length > 0 ? (
@@ -69,20 +98,7 @@ const ListView = ({ packages, currentPage, setCurrentPage, onImageClick }) => {
                   {currentPackages.map((pkg) => (
                     <CTableRow key={pkg.TRACKING}>
                       <CTableDataCell>{pkg.TRACKING}</CTableDataCell>
-                      <CTableDataCell>
-                        <img
-                          src={`${fullBackendUrl}/${pkg.IMAGEN}`}
-                          alt="Package"
-                          style={{
-                            cursor: 'pointer',
-                            maxWidth: '50px',
-                            maxHeight: '50px',
-                            width: 'auto',
-                            height: 'auto',
-                          }}
-                          onClick={() => onImageClick(`${fullBackendUrl}/${pkg.IMAGEN}`)}
-                        />
-                      </CTableDataCell>
+                      <CTableDataCell>{renderImageOrPlaceholder(pkg)}</CTableDataCell>
                       <CTableDataCell>
                         <CBadge color={getBadgeColor(pkg.ESTADO)}>
                           {pkg.ESTADO === 'EN BODEGA' ? `${pkg.ESTADO} DE MIAMI` : pkg.ESTADO}
